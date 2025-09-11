@@ -89,27 +89,32 @@
 
             <!-- BURGER -->
             <div class="" data-dropdown>
-                <ul class="flex flex-column 2xl:text-[1rem] xl:text-[0.9rem] font-bold gap-[3rem] text-gray-700 text-right">
-                    <li class="relative">
-                    <!-- Button -->
-                    <button data-toggle
-                        class="flex items-center border border-gray-300 bg-white text-gray-700 px-2 py-2 rounded hover:bg-gray-200 transition-all duration-200">
-                        <img src="{% static burger %}" alt="hamburger-icon" class="transition-transform duration-200 w-5">
-                    </button>
+                {% if request.user.is_authenticated %}
+                    {% if perms.blog.add_artikel %}
+                    <ul class="flex flex-column 2xl:text-[1rem] xl:text-[0.9rem] font-bold gap-[3rem] text-gray-700 text-right">
+                        <li class="relative">
+                        <!-- Button -->
+                        <button data-toggle
+                            class="flex items-center border border-gray-300 bg-white text-gray-700 px-2 py-2 rounded hover:bg-gray-200 transition-all duration-200">
+                            <img src="{% static burger %}" alt="hamburger-icon" class="transition-transform duration-200 w-5">
+                        </button>
 
-                    <!-- Menu -->
-                    <div data-menu
-                        class="absolute right-0 mt-2 bg-white border border-gray-200 rounded shadow-md
-                            opacity-0 scale-y-0 origin-top transition-all duration-200 pointer-events-none
-                            2xl:w-50 xl:w-40">
-                        <a href="{% url 'core:home' %}" class="block px-4 py-2 hover:bg-gray-100">Home</a>
-                        <a href="{% url 'user:login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a>
-                        <a href="{% url 'core:tambah-artikel' %}" class="block px-4 py-2 hover:bg-gray-100">Tambah Artikel</a>
-                        <a href="{% url 'core:halaman-detail-artikel' 'sore-istri-dari-masa-depan-jadi-film-terlaris-di-indonesia' %}"
-                        class="block px-4 py-2 hover:bg-gray-100">Detail Artikel</a>
-                    </div>
-                    </li>
-                </ul>
+                        <!-- Menu -->
+                        <div data-menu
+                            class="absolute right-0 mt-2 bg-white border border-gray-200 rounded shadow-md
+                                opacity-0 scale-y-0 origin-top transition-all duration-200 pointer-events-none
+                                2xl:w-50 xl:w-40">
+                            <a href="{% url 'core:home' %}" class="block px-4 py-2 hover:bg-gray-100">Home</a>
+                            <a href="{% url 'user:login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a>
+                            <a href="{% url 'core:tambah-artikel' %}" class="block px-4 py-2 hover:bg-gray-100">Tambah Artikel</a>
+                            <a href="{% url 'core:halaman-detail-artikel' 'sore-istri-dari-masa-depan-jadi-film-terlaris-di-indonesia' %}"
+                            class="block px-4 py-2 hover:bg-gray-100">Detail Artikel</a>
+                        </div>
+                        </li>
+                    </ul>
+                    {% else %}
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>

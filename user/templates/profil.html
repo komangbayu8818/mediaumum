@@ -69,13 +69,17 @@
 
             <div class="flex flex-col items-left gap-1">
                 <span class="text-[12px] font-semibold">Tanggal Lahir</span>
+                {% if data.tanggal_lahir %}
                 <h1>{{data.tanggal_lahir|date:"j F Y"}}</h1>
+                {% else %}
+                <h1>-</h1>
+                {% endif %}
             </div>
 
             <div class="w-full border-[1px] border-[#0000000c] justify-center rounded-full"></div>
 
             <div class="flex flex-col items-left gap-1">
-                <span class="text-[12px] font-semibold">Tanggal Lahir</span>
+                <span class="text-[12px] font-semibold">Status Pernikahan</span>
                 <h1>{{data.get_status_pernikahan_display}}</h1>
             </div>
         </div>
