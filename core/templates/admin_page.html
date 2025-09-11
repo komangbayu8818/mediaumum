@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load tz %}
+{% block content %}
+    {% include "snippets/simple_navbar.html" %}
+
+    {% include "snippets/messages.html" %}
+
+
+<div class="flex flex-col px-4 py-4">
+    <form method="get" class="flex flex-wrap gap-2 items-center justify-between mb-3">
+        <div class="flex gap-2">
+            <select name="kategori" class="select select-sm border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+                <option value="">Semua kategori</option>
+                <!-- loop kategori -->
+                {% for pilihan in list_kategori %}
+                <option value="{{pilihan}}" {% if request.GET.kategori == pilihan %}selected{% endif %}>{{pilihan}}</option>
+                {% endfor %}
+            </select>
+            <input type="date" name="hari" value="{{request.GET.hari}}" class="input input-sm border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+
+            <input type="search" name="cari" value="{{request.GET.cari}}" placeholder="Cari judul/penulis…" class="input input-sm w-64 border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+        </div>
+
+        <div class="flex gap-2">
+
+            <select name="sort" class="select select-sm border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+                <option value="update_desc" {% if request.GET.sort == 'update_desc' or not request.GET.sort %}selected{% endif %}>Update ↓ (terbaru - terlama)</option>
+                <option value="update_asc" {% if request.GET.sort == 'update_asc' %}selected{% endif %}>Update ↑ (terlama - terbaru)</option>
+                <option value="viewer_asc" {% if request.GET.sort == 'viewer_asc' %}selected{% endif %}>Viewer ↑ (paling sedikit - paling banyak)</option>
+                <option value="viewer_desc" {% if request.GET.sort == 'viewer_desc' %}selected{% endif %}>Viewer ↓ (paling banyak - paling sedikir)</option>
+            </select>
+            
+
+            <button class="px-3 py-2 border rounded text-white font-semibold 
+            bg-blue-500 border-blue-500 xl:text-sm 2xl:text-[18px]
+            hover:bg-blue-600 hover:border-blue-600 
+            focus:bg-blue-700 focus:border-blue-700 
+            transition-colors duration-200 ">Terapkan</button>
+            <a href="{% url 'core:halaman-admin' %}" class="px-3 py-2 border rounded text-white font-semibold 
+            bg-red-500 border-red-500 xl:text-sm 2xl:text-[18px]
+            hover:bg-red-600 hover:border-red-600 
+            focus:bg-red-700 focus:border-red-700 
+            transition-colors duration-200 flex items-center">Reset</a>
+            <a href="{% url 'core:tambah-artikel' %}" class="bg-green-600 hover:bg-green-700 focus:bg-green-800 text-white text-xl font-semibold px-4 py-2 rounded">+</a>
+        </div>
+    </form>
+
+    <div class="overflow-x-auto rounded-lg border border-gray-200 shadow">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <thead class="bg-blue-900 text-white">
+            <tr>
+            <th class="px-4 py-3 text-left font-semibold">No</th>
+            <th class="px-4 py-3 text-left font-semibold">Thumbnail</th>
+            <th class="px-4 py-3 text-left font-semibold">Judul</th>
+            <th class="px-4 py-3 text-left font-semibold">Isi</th>
+            <th class="px-4 py-3 text-left font-semibold">Kategori</th>
+            <th class="px-4 py-3 text-left font-semibold">Penulis</th>
+            <th class="px-4 py-3 text-left font-semibold">Pubdate</th>
+            <th class="px-4 py-3 text-left font-semibold">Last Update</th>
+            <th class="px-4 py-3 text-left font-semibold">Viewer</th>
+            <th class="px-4 py-3 text-left font-semibold">Status</th>
+            <th class="px-4 py-3 text-right font-semibold">Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-100 bg-white">
+            {% for post in artikel %}
+            <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2 text-gray-700 text-center">{{forloop.counter}}</td>
+            <td class="px-4 py-2">
+                <img src="{{ post.thumbnail.url }}" class="w-24 h-16 object-cover rounded" alt="thumbnail">
+            </td>
+            <td class="px-4 py-2 max-w-[220px]">
+                <div class="line-clamp-2 font-semibold">{{post.judul}}</div>
+            </td>
+            <td class="px-4 py-2 max-w-[360px]">
+                <!-- <div class="line-clamp-3 text-gray-600">{{ post.isi|striptags }}</div> -->
+                <div class="line-clamp-3 text-gray-600">{{post.isi|safe}}</div>
+            </td>
+            <td class="px-4 py-2 text-gray-700">{{ post.kategori }}</td>
+            <td class="px-4 py-2 text-gray-700 capitalize">{{ post.author.username }}</td>
+            <td class="px-4 py-2 text-gray-500">{{ post.pubdate|timezone:"Asia/Jakarta"|date:"d/m/Y H:i" }} WIB</td>
+            <td class="px-4 py-2 text-gray-500">{{ post.update|timezone:"Asia/Jakarta"|date:"d/m/Y H:i" }} WIB</td>
+            <td class="px-4 py-2 text-center cursor-default">{{ post.view_count }}</td>
+            <td class="px-4 py-2 text-center text-blue-400 cursor-default">Posted</td>
+            <td class="px-4 py-2 text-right relative">
+                <details class="relative inline-block transition-all" data-menu>
+                    <summary class="cursor-pointer px-2 text-lg list-none focus:text-orange-500">⋮</summary>
+                    <div class="relative w-28 bg-white border rounded shadow text-sm ">
+                        <a class="block px-4 py-2 hover:bg-gray-50 text-orange-500" href="{% url 'core:edit' post.slug_art %}">Edit</a>
+                        <a class="block px-4 py-2 hover:bg-gray-50 text-red-600" href="{% url 'core:hapus' post.slug_art %}">Hapus</a>
+                        <a class="block px-4 py-2 hover:bg-gray-50" href="{% url 'core:halaman-detail-artikel' post.slug_art %}" target="_blank">See Article</a>
+                    </div>
+                </details>
+            </td>
+            </tr>
+            {% empty %}
+            <tr>
+            <td colspan="9" class="px-4 py-6 text-center text-gray-500 italic">
+                Belum ada artikel.
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

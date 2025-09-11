@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="flex flex-col w-full h-full items-center justify-center bg-gray-200 font-[poppins] py-10">
+    <div class="flex flex-col w-full h-fit justify-center items-center gap-6">
+
+        <div class="2xl:w-1/3 xl:w-2/4 h-fit bg-white flex flex-col gap-4 px-6 pt-6 pb-9">
+            <div class="flex justify-center items-center border-b-1 pb-6 w-full">
+                <a href="{% url 'core:home' %}" class="text-xl w-1/3 flex justify-start">
+                    <--
+                </a>
+                <h1 href="" class="font-semibold text-xl w-1/3 flex justify-center">
+                    Profil Saya
+                </h1>
+                <a href="" class="text-xl w-1/3 flex justify-end">
+                    <div class="flex flex-col items-center justify-center space-y-1 cursor-pointer">
+                        <span class="w-1 h-1 bg-gray-700 rounded-full"></span>
+                        <span class="w-1 h-1 bg-gray-700 rounded-full"></span>
+                        <span class="w-1 h-1 bg-gray-700 rounded-full"></span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center justify-center gap-2">
+                {% if data.foto_profil %}
+                    <img src="{{data.foto_profil.url}}" alt="Guest" class="bg-gray-200 rounded-full w-[90px] h-[90px] flex items-center justify-center object-center object-cover">
+                    <a href="{% url 'user:halaman-edit-profil' %}" class="mt-1 text-xs text-blue-600">Ubah Foto Profil</a>
+                {% else %}
+                    <img src="{% static user_profile %}" alt="Guest" class="bg-gray-200 rounded-full w-[90px] h-[90px] flex items-center justify-center object-center object-cover">
+                {% endif %}
+                <h1 class="text-2xl font-semibold text-[#05204b]">{{nama_lengkap}}</h1>
+                <h1 class="text-xl font-semibold ">@{{user.username}}</h1>
+                <div class="flex flex-col items-center justify-center">
+                    {% if admin %}
+                    <p class="font-semibold text-md text-[#0000008a]">Admin Mediaumum</p>
+                    {% else %}
+                    <p class="font-semibold text-md text-[#0000008a]">Akun Mediaumum</p>
+                    {% endif %}
+
+                    {% if user.email %}
+                    <p class="font-normal text-md text-[#0000008a]">{{user.email}}</p>
+                    {% else %}
+                    <p class="font-normal text-md text-[#0000008a]">-Anda Belum Menambahkan email-</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="2xl:w-1/3 xl:w-2/4 h-fit bg-white flex flex-col px-7">
+            <div class="w-full py-3">
+                <a href="{% url 'user:halaman-edit-profil' %}" class="text-[#2e8eff] hover:text-black transition-all duration-200">Ubah Profil</a>
+            </div>
+
+            <div class="w-full border-[1px] border-[#0000000c] justify-center rounded-full"></div>
+
+            <div class="w-full py-3">
+                <a href="{% url 'user:halaman-ubah-password' %}" class="text-[#2e8eff] hover:text-black transition-all duration-200">Ubah Password</a>
+            </div>
+        </div>
+
+        <div class="2xl:w-1/3 xl:w-2/4 h-fit bg-white flex flex-col px-6 py-3 gap-2">
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Gender</span>
+                <h1>{{data.get_gender_display}}</h1>
+            </div>
+
+            <div class="w-full border-[1px] border-[#0000000c] justify-center rounded-full"></div>
+
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Tanggal Lahir</span>
+                <h1>{{data.tanggal_lahir|date:"j F Y"}}</h1>
+            </div>
+
+            <div class="w-full border-[1px] border-[#0000000c] justify-center rounded-full"></div>
+
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Tanggal Lahir</span>
+                <h1>{{data.get_status_pernikahan_display}}</h1>
+            </div>
+        </div>
+
+        <div class="2xl:w-1/3 xl:w-2/4 h-fit bg-white flex flex-col px-6 py-3 gap-2">
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Nomor Handphone</span>
+                <h1>{{data.nomor_handphone}}</h1>
+            </div>
+
+            <div class="w-full border-[1px] border-[#0000000c] justify-center rounded-full"></div>
+
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Alamat</span>
+                <h1>{{data.alamat}}</h1>
+                <h1>{{data.kota}}</h1>
+                <h1>{{data.kode_pos}}</h1>
+                <h1>{{data.get_provinsi_display}}</h1>
+            </div>
+        </div>
+
+        <div class="2xl:w-1/3 xl:w-2/4 h-fit bg-white flex flex-col px-6 py-3 gap-2">
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Pendidikan Terakhir</span>
+                <h1>{{data.get_pendidikan_terakhir_display}}</h1>
+            </div>
+
+            <div class="w-full border-[1px] border-[#0000000c] justify-center rounded-full"></div>
+
+            <div class="flex flex-col items-left gap-1">
+                <span class="text-[12px] font-semibold">Pekerjaan</span>
+                <h1>{{data.get_pekerjaan_display}}</h1>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

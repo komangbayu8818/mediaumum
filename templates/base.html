@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediaumum</title>
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <style>
+    /* Sembunyikan scrollbar, tapi tetap bisa scroll */
+    .scrollbar-none { 
+        -ms-overflow-style: none;   /* IE/Edge lama */
+        scrollbar-width: none;      /* Firefox */
+    }
+    .scrollbar-none::-webkit-scrollbar { 
+        display: none;              /* Chrome/Safari/Opera */
+    }
+    summary { list-style: none; }
+    summary::marker { content: ""; }
+    summary::-webkit-details-marker { display: none; }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% block content %}
+
+    {% endblock content %}
+    
+</body>
+</html>

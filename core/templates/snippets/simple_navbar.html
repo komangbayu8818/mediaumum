@@ -1,0 +1,113 @@
+{% load static %}
+<script src="{% static 'src/script.js' %}" defer></script>
+
+<div class="font-[poppins]">
+
+    <div class="bg-[#E9E9E9] w-full h-[95px] flex items-center justify-between">
+        <div class="flex 
+        2xl:ml-[95px]
+        xl:ml-[75px]">
+            <div class="flex transition-all duration-200 hover:opacity-65
+            2xl:w-[127px] 2xl:h-[63px]
+            xl:w-fit xl:h-[58px]">
+                <a href="{% url 'core:home' %}" class="flex">
+                    <img src="{% static logo %}" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div class="flex items-center
+        2xl:mr-[70px] 2xl:gap-[37px] 
+        xl:mr-[55px] xl:gap-[28px]">
+            <!-- USER -->
+            <div class="relative" data-dropdown>
+                <!-- Button -->
+                <div data-toggle
+                    class="group cursor-pointer flex bg-white max-w-fit items-center gap-[13px] rounded-4xl hover:shadow-xl transition-all duration-300
+                            2xl:h-[45px] 2xl:pl-3 xl:h-[39px] xl:px-3">
+
+                    <div class="relative 2xl:w-[31px] xl:w-[29px] lg:w-[31px] md:w-[11px] sm:w-[11px]">
+                    {% if data.foto_profil %}
+                        <img src="{{data.foto_profil.url}}" alt="" class="transition duration-400 rounded-full">
+                    {% else %}
+                        <img src="{% static user_profile %}" alt="" class="transition duration-400 group-[.open]:opacity-0">
+                        <img src="{% static user_profile_hover %}" alt=""
+                            class="absolute inset-0 w-[31px] opacity-0 transition duration-400 group-[.open]:opacity-100">
+                    {% endif %}
+                    </div>
+
+                    <div>
+                    {% if request.user.is_authenticated %}
+                        <h1 class="font-[poppins] text-[#545152] transition duration-400
+                                2xl:text-[20px] 2xl:font-medium xl:text-[16px] xl:font-semibold
+                                group-[.open]:text-[#F58220]">
+                        {{ user }}
+                        </h1>
+                    {% else %}
+                        <h1 class="font-[poppins] text-[#545152] transition duration-400
+                                2xl:text-[20px] 2xl:font-medium xl:text-[16px] xl:font-semibold
+                                group-[.open]:text-[#F58220]">
+                        Guest
+                        </h1>
+                    {% endif %}
+                    </div>
+
+                    <div class="relative 2xl:w-[19px] 2xl:mr-[3px] xl:w-[18px] xl:mr-[3px]">
+                    <img src="{% static arrow %}" alt=""
+                        class="w-full transition-transform duration-400 group-[.open]:opacity-0 group-[.open]:rotate-90">
+                    <img src="{% static arrow_hover %}" alt=""
+                        class="absolute inset-0 w-full opacity-0 transition-transform duration-400 group-[.open]:opacity-100 group-[.open]:rotate-90">
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div data-menu
+                    class="absolute right-0 mt-2 bg-white border border-gray-200 rounded shadow-md
+                            opacity-0 scale-y-0 origin-top transition-all duration-200 pointer-events-none
+                            2xl:w-50 xl:w-40 text-center">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'user:halaman-profil' %}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                    <a href="{% url 'core:halaman-admin' %}" class="block px-4 py-2 hover:bg-gray-100">Admin Page</a>
+                    <a href="{% url 'user:logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                    {% else %}
+                    <a href="{% url 'user:login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a>
+                    <a href="{% url 'user:register' %}" class="block px-4 py-2 hover:bg-gray-100">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="hover:opacity-70 transition duration-150">
+                <img src="{% static moon %}" alt="" class='flex 
+                2xl:w-[40px]
+                xl:w-[35px]'>
+            </div>
+
+            <!-- BURGER -->
+            <div class="" data-dropdown>
+                <ul class="flex flex-column 2xl:text-[1rem] xl:text-[0.9rem] font-bold gap-[3rem] text-gray-700 text-right">
+                    <li class="relative">
+                    <!-- Button -->
+                    <button data-toggle
+                        class="flex items-center border border-gray-300 bg-white text-gray-700 px-2 py-2 rounded hover:bg-gray-200 transition-all duration-200">
+                        <img src="{% static burger %}" alt="hamburger-icon" class="transition-transform duration-200 w-5">
+                    </button>
+
+                    <!-- Menu -->
+                    <div data-menu
+                        class="absolute right-0 mt-2 bg-white border border-gray-200 rounded shadow-md
+                            opacity-0 scale-y-0 origin-top transition-all duration-200 pointer-events-none
+                            2xl:w-50 xl:w-40">
+                        <a href="{% url 'core:home' %}" class="block px-4 py-2 hover:bg-gray-100">Home</a>
+                        <a href="{% url 'user:login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a>
+                        <a href="{% url 'core:tambah-artikel' %}" class="block px-4 py-2 hover:bg-gray-100">Tambah Artikel</a>
+                        <a href="{% url 'core:halaman-detail-artikel' 'sore-istri-dari-masa-depan-jadi-film-terlaris-di-indonesia' %}"
+                        class="block px-4 py-2 hover:bg-gray-100">Detail Artikel</a>
+                    </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+

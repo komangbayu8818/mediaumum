@@ -1,0 +1,11 @@
+{% if messages %}
+    <div class='flex justify-center'>
+    {% for pesan in messages %}
+    
+        <div class='bg-[#33ff0060] border-2 border-[#3cff003b] px-[8rem] py-2 text-center mx-2 my-2 rounded'>
+            {{pesan}}
+        </div>
+
+    {% endfor %}
+    </div>
+{% endif %}
