@@ -7,22 +7,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mediaumum</title>
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <!-- Tagify CSS -->
     <style>
-    /* Sembunyikan scrollbar, tapi tetap bisa scroll */
-    .scrollbar-none { 
-        -ms-overflow-style: none;   /* IE/Edge lama */
-        scrollbar-width: none;      /* Firefox */
-    }
-    .scrollbar-none::-webkit-scrollbar { 
-        display: none;              /* Chrome/Safari/Opera */
-    }
-    summary { list-style: none; }
-    summary::marker { content: ""; }
-    summary::-webkit-details-marker { display: none; }
+        /* Sembunyikan scrollbar, tapi tetap bisa scroll */
+        .scrollbar-none { 
+            -ms-overflow-style: none;   /* IE/Edge lama */
+            scrollbar-width: none;      /* Firefox */
+        }
+        .scrollbar-none::-webkit-scrollbar { 
+            display: none;              /* Chrome/Safari/Opera */
+        }
+        summary { list-style: none; }
+        summary::marker { content: ""; }
+        summary::-webkit-details-marker { display: none; }
+        .cke_chrome {
+            width: 100% !important;
+            display: block !important;  
+            max-width: 100% !important;
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+        }
+        .cke_contents {
+            min-height: 15rem !important; /* h-60 */
+            padding: 1rem !important; /* px-4 py-2 */
+        }
+        #previewBox { line-height: 1.7; color: #111827; }
+        #previewBox h1 { font-size: 1.75rem; font-weight: 800; margin: 1rem 0 .5rem; }
+        #previewBox h2 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 .5rem; }
+        #previewBox h3 { font-size: 1rem; font-weight: 700; margin: 1rem 0 .5rem; }
+        #previewBox p  { margin: .5rem 0; }
+        #previewBox ul, #previewBox ol { padding-left: 1.25rem; margin: .75rem 0; }
+        #previewBox img, #previewBox video { max-width: 100%; height: auto; }
+        #previewBox table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        #previewBox th, #previewBox td { border: 1px solid #e5e7eb; padding: .5rem; }
+
+        /* CHIP: full biru */
+        .tagify__tag{ position: relative !important; }                 /* buat wadah X */
+        .tagify__tag > div{
+        background:#2563eb !important;                               /* biru */
+        color:#fff !important;
+        border-radius:9999px !important;
+        padding:.25rem 1.5rem .25rem .75rem !important;               /* ruang kanan utk X */
+        display:flex !important; align-items:center !important; gap:.35rem !important;
+        }
+        .tagify__tag-text{ color:#fff !important; }
+
+        /* TOMBOL X: jadikan overlay di dalam chip biru */
+        .tagify__tag__removeBtn{
+        position:absolute !important;
+        right:8px !important;
+        top:50% !important;
+        transform:translateY(-50%) !important;
+        width:auto !important; height:auto !important;
+        margin:0 !important; padding:0 !important;
+        background:transparent !important;
+        border:none !important; box-shadow:none !important;
+        color:#fff !important; opacity:1 !important;                  /* X putih */
+        cursor:pointer !important;
+        }
+
+        /* Matikan bulatan abu-abu bawaan & paksa tampil X putih */
+        .tagify__tag__removeBtn::after{
+        content:"×" !important;                                       /* tulis X sendiri */
+        background:transparent !important;
+        color:#fff !important;
+        box-shadow:none !important; border:none !important;
+        width:auto !important; height:auto !important;
+        }
+
+        /* Hover */
+        .tagify__tag:hover > div{ background:#1d4ed8 !important; }
+        .tagify__tag__removeBtn:hover{ color:#fee2e2 !important; }      /* opsional: X merah muda */
+
+        /* Input */
+        .tagify__input{ min-width:8rem; }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
     {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="">
     {% block content %}
 
     {% endblock content %}

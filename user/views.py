@@ -79,6 +79,7 @@ def register_user(request):
     return render(request, 'register.html', tambahan)
 
 
+@login_required(login_url='/')
 def ubah_password(request):
     user = User.objects.get(username=request.user)
     form = UserPasswordChangeForm(request.user, request.POST)
@@ -98,7 +99,6 @@ def ubah_password(request):
     
 
     return render(request, 'ubah_password.html', src)
-
 
 @login_required(login_url='/')
 def logout_user(request):

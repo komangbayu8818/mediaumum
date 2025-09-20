@@ -3,187 +3,124 @@
 
 {% block content %}
 {% include navbar %}
-<div class="w-full h-fit bg-gray-200 flex font-[poppins] 
-">
-    <div class="w-6/8 h-full bg-red-300 p-[47px] flex flex-col gap-6">
-        <div class="w-full h-fit flex bg-white py-[25px] gap-4 items-stretch">
-            <div class=" border-3 border-[#F58220] rounded-full"></div>
-            <div class="h-full text-[24px] font-bold ">{{artikel.judul}}</div>
-        </div>
+<div class="w-full h-fit flex flex-col font-[poppins]">
 
-        <div class="w-full h-fit flex justify-center">
-            <img src="{{artikel.thumbnail.url}}" alt="" class="object-contain object-center rounded-[15px] w-3/5">
-        </div>
+    <nav class="flex py-4 ml-10" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            <li class="inline-flex items-center">
+                <a href="{% url 'core:home' %}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                    <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <span class="ms-1 text-sm font-medium md:ms-2 ">{{artikel.judul}}</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
 
-        <article class="w-full h-fit flex bg-teal-200 py-[25px] gap-4 justify-center items-start font-medium font-[merriweather] text-[18px] flex-col">
-            {{artikel.isi|safe}}
-        </article>
-        
+    <container class="flex w-full h-full">
+        <div class="w-6/8 h-full px-[47px] pb-[47px] pt-[35px] flex flex-col gap-6 bg-[#e1e1e148] mb-5 2xl:ml-5 xl:mx-6 rounded-md">
+            <div class="w-full h-fit flex py-[25px] gap-4 items-stretch">
+                <div class=" border-3 border-[#F58220] rounded-full"></div>
+                <div class="h-full text-[24px] font-bold ">{{artikel.judul}}</div>
+            </div>
 
-        <div class="w-fit h-fit p-5 bg-white rounded-full flex gap-5">
-        <a href="" class="">
-            <svg viewBox="0 0 256 256" class="w-8 h-8 fill-green-600" aria-hidden="true">
-            <path d="M128 0C57.3 0 0 57.3 0 128c0 22.6 5.9 44.4 17.2 63.6L0 256l67.9-17.6c18.7 10.2 39.8 15.6 60.1 15.6 70.7 0 128-57.3 128-128S198.7 0 128 0zm59.3 181.5c-2.5 7-12.5 12.9-20.3 14.6-5.4 1.1-12.4 2-36.2-7.8-30.4-12.6-50-43.6-51.5-45.6-1.5-2.1-12.3-16.4-12.3-31.3s7.7-22.2 10.5-25.2c2.8-3.1 6.1-3.8 8.1-3.8 2 0 4 0 5.7.1 1.8.1 4.3-.7 6.7 5.1 2.4 5.9 8.2 19.5 8.9 20.9.7 1.4 1.2 3 .2 4.9-.9 2-1.7 3.2-3.4 5.1-1.7 1.9-3.2 3.3-4.9 5.3-1.5 1.8-3.1 3.7-1.3 7 1.8 3.2 7.8 12.9 16.7 20.9 11.5 10.2 21.3 13.4 24.6 14.9 3.3 1.5 5.2 1.2 7.1-.7 1.9-2 8.1-9.3 10.3-12.5 2.2-3.2 4.4-2.6 7.4-1.6 3 .9 19.2 9 22.4 10.6 3.3 1.6 5.4 2.4 6.2 3.8.9 1.3.9 7.7-1.6 14.7z"/>
-            </svg>
-        </a>
-        
-        <a href="" class="">
-            <svg viewBox="0 0 24 24" class="w-8 h-8 fill-blue-600" aria-hidden="true">
-            <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.093 10.125 24v-8.438H7.078v-3.49h3.047V9.356c0-3.02 1.792-4.688 4.533-4.688 1.312 0 2.686.235 2.686.235v2.953h-1.513c-1.494 0-1.953.928-1.953 1.883v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.093 24 18.1 24 12.073z"/>
-            </svg>
-        </a>
+            <div class="w-full h-fit flex justify-center">
+                <img src="{{artikel.thumbnail.url}}" alt="" class="object-contain object-center rounded-[15px] w-3/5">
+            </div>
 
-        <a href="">
-            <svg viewBox="0 0 24 24" class="w-8 h-8 fill-current" aria-hidden="true">
-            <path d="M18.244 2H21.5l-7.59 8.658L23.5 22h-7.307l-5.72-6.614L3.756 22H.5l8.143-9.289L.5 2h7.307l5.33 6.163L18.244 2z"/>
-            </svg>
-        </a>
-        </div>
-
-    </div>
-
-    <div class="2xl:w-2/9 2xl:ml-[36px] xl:w-2/8 h-fit bg-yellow-300 flex flex-col gap-5 py-5">
-        <div class="bg-[#F0F0F0] w-full h-fit rounded-[10px] flex flex-col items-center 
-            2xl:mr-[36px]
-            xl:mx-0">
-
+            <article class="w-full h-fit flex py-[25px] gap-4 justify-center items-start font-medium font-[merriweather] text-[18px] flex-col">
+                {{artikel.isi|safe}}
+            </article>
+            
+            <div class="w-fit h-fit 2xl:p-5 xl:p-4 bg-white rounded-full flex gap-5">
+                <a href="{% url 'core:share' 'wa' artikel.slug_art %}" target="_blank" rel="noopener" class="">
+                    <svg viewBox="0 0 256 256" class="2xl:w-8 2xl:h-8 xl:w-6 xl:h-6 hover:scale-120 transition-all duration-200 fill-green-600" aria-hidden="true">
+                    <path d="M128 0C57.3 0 0 57.3 0 128c0 22.6 5.9 44.4 17.2 63.6L0 256l67.9-17.6c18.7 10.2 39.8 15.6 60.1 15.6 70.7 0 128-57.3 128-128S198.7 0 128 0zm59.3 181.5c-2.5 7-12.5 12.9-20.3 14.6-5.4 1.1-12.4 2-36.2-7.8-30.4-12.6-50-43.6-51.5-45.6-1.5-2.1-12.3-16.4-12.3-31.3s7.7-22.2 10.5-25.2c2.8-3.1 6.1-3.8 8.1-3.8 2 0 4 0 5.7.1 1.8.1 4.3-.7 6.7 5.1 2.4 5.9 8.2 19.5 8.9 20.9.7 1.4 1.2 3 .2 4.9-.9 2-1.7 3.2-3.4 5.1-1.7 1.9-3.2 3.3-4.9 5.3-1.5 1.8-3.1 3.7-1.3 7 1.8 3.2 7.8 12.9 16.7 20.9 11.5 10.2 21.3 13.4 24.6 14.9 3.3 1.5 5.2 1.2 7.1-.7 1.9-2 8.1-9.3 10.3-12.5 2.2-3.2 4.4-2.6 7.4-1.6 3 .9 19.2 9 22.4 10.6 3.3 1.6 5.4 2.4 6.2 3.8.9 1.3.9 7.7-1.6 14.7z"/>
+                    </svg>
+                </a>
                 
-            <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-            2xl:p-3
-            xl:p-1">
-                <a href="">
-                    <div class="flex justify-between items-center">
+                <a href="{% url 'core:share' 'fb' artikel.slug_art %}" target="_blank" rel="noopener" class="">
+                    <svg viewBox="0 0 24 24" class="2xl:w-8 2xl:h-8 xl:w-6 xl:h-6 hover:scale-120 transition-all duration-200 fill-blue-600" aria-hidden="true">
+                    <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.093 10.125 24v-8.438H7.078v-3.49h3.047V9.356c0-3.02 1.792-4.688 4.533-4.688 1.312 0 2.686.235 2.686.235v2.953h-1.513c-1.494 0-1.953.928-1.953 1.883v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.093 24 18.1 24 12.073z"/>
+                    </svg>
+                </a>
 
-                        <div class="flex font-semibold 
-                        2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                        xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                            <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                        </div>
-                        
-                        
-                        <div class="flex 
-                        2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                        xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                            <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                        </div>
-
-                    </div>
+                <a href="{% url 'core:share' 'x' artikel.slug_art %}" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" class="2xl:w-8 2xl:h-8 xl:w-6 xl:h-6 hover:scale-120 transition-all duration-200 fill-current" aria-hidden="true">
+                    <path d="M18.244 2H21.5l-7.59 8.658L23.5 22h-7.307l-5.72-6.614L3.756 22H.5l8.143-9.289L.5 2h7.307l5.33 6.163L18.244 2z"/>
+                    </svg>
                 </a>
             </div>
-            
-            
-            <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-            2xl:p-3
-            xl:p-1">
-                <a href="">
-                    <div class="flex justify-between items-center">
 
-                        <div class="flex font-semibold 
-                        2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                        xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                            <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                        </div>
-                        
-                        
-                        <div class="flex 
-                        2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                        xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                            <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                        </div>
-
-                    </div>
-                </a>
+            <div class="flex flex-wrap gap-4">
+                {% for tag in artikel.tags.all|slice:":15" %}
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?cari={{ tag.name }}" class="px-3 py-2 bg-[#0056A0] rounded text-sm font-medium text-white text-">
+                        #{{ tag.name }}
+                    </a>
+                {% empty %}
+                    <span class=""></span>
+                {% endfor %}
             </div>
-            
-            
-            <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-            2xl:p-3
-            xl:p-1">
-                <a href="">
-                    <div class="flex justify-between items-center">
-
-                        <div class="flex font-semibold 
-                        2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                        xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                            <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                        </div>
-                        
-                        
-                        <div class="flex 
-                        2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                        xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                            <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                        </div>
-
-                    </div>
-                </a>
-            </div>
-            
-            
-            <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-            2xl:p-3
-            xl:p-1">
-                <a href="">
-                    <div class="flex justify-between items-center">
-
-                        <div class="flex font-semibold 
-                        2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                        xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                            <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                        </div>
-                        
-                        
-                        <div class="flex 
-                        2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                        xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                            <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                        </div>
-
-                    </div>
-                </a>
-            </div>
-            
-            
-            <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-            2xl:p-3
-            xl:p-1">
-                <a href="">
-                    <div class="flex justify-between items-center">
-
-                        <div class="flex font-semibold 
-                        2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                        xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                            <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                        </div>
-                        
-                        
-                        <div class="flex 
-                        2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                        xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                            <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                        </div>
-
-                    </div>
-                </a>
-            </div>
-                
         </div>
 
-        <div class="flex w-full justify-center
-            2xl:h-10/18 
-            xl:h-8/20">
-            <a href=""><img src="{% static iklan2 %}" alt='gambar' class="flex w-full h-full"></a>
+        <div class="2xl:w-2/9 2xl:ml-[36px] xl:w-2/8 h-fit  flex flex-col gap-5 pb-5">
+            <div class="bg-[#F0F0F0] w-full h-fit rounded-[10px] flex flex-col items-center 
+                2xl:mr-[36px]
+                xl:mx-0">
+
+                    
+                {% for post in ads %}
+                    
+                    <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
+                    2xl:p-3
+                    xl:p-1">
+                        <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}">
+                            <div class="flex justify-between items-center">
+
+                                <div class="flex font-semibold 
+                                2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
+                                xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
+
+                                    <h1>{{post.judul}}</h1>
+                                </div>
+                                
+                                
+                                <div class="flex w-fit
+                                2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
+                                xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
+
+                                    <img src="{{post.thumbnail.url}}" alt="gambar1" class="rounded-[15px] object-cover object-center w-full h-full">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    {% empty %}
+
+                    <p class="p-6 text-gray-500">Belum ada artikel.</p>
+
+                {% endfor %}
+                    
+            </div>
+
+            <div class="flex w-full justify-center
+                2xl:h-10/18 
+                xl:h-8/20">
+                <a href=""><img src="{% static iklan2 %}" alt='gambar' class="flex w-full h-full"></a>
+            </div>
         </div>
-    </div>
+    </container>
+
 </div>
+
+{% include footer %}
 {% endblock content %}

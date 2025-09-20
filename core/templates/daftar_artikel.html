@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include simple_navbar %}
+
+<main class='p-6'>
+    <form method="get" class="flex flex-wrap gap-2 items-center justify-between mb-6">
+        <div class="flex gap-2">
+            <select name="kategori" class="select select-sm border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+                <option value="">Semua kategori</option>
+                <!-- loop kategori -->
+                {% for pilihan in list_kategori %}
+                <option value="{{pilihan}}" {% if request.GET.kategori == pilihan %}selected{% endif %}>{{pilihan}}</option>
+                {% endfor %}
+            </select>
+            <input type="date" name="hari" value="{{request.GET.hari}}" class="input input-sm border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+
+            <input type="search" name="cari" value="{{request.GET.cari}}" placeholder="Cari judul/tag/author…" class="input input-sm w-64 border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+        </div>
+
+        <div class="flex gap-2">
+
+            <select name="sort" class="select select-sm border rounded px-3 py-2 xl:text-sm 2xl:text-[18px]">
+                <option value="latest" {% if request.GET.sort == 'latest' or not request.GET.sort %}selected{% endif %}>Terbaru</option>
+                <option value="oldest" {% if request.GET.sort == 'oldest' %}selected{% endif %}>Terlama</option>
+                <option value="most_popular" {% if request.GET.sort == 'most_popular' %}selected{% endif %}>Terpopuler</option>
+            </select>
+            
+
+            <button class="px-3 py-2 border rounded text-white font-semibold 
+            bg-blue-500 border-blue-500 xl:text-sm 2xl:text-[18px]
+            hover:bg-blue-600 hover:border-blue-600 
+            focus:bg-blue-700 focus:border-blue-700 
+            transition-colors duration-200 ">Terapkan</button>
+            <a href="{% url 'core:halaman-daftar-artikel' %}" class="px-3 py-2 border rounded text-white font-semibold 
+            bg-red-500 border-red-500 xl:text-sm 2xl:text-[18px]
+            hover:bg-red-600 hover:border-red-600 
+            focus:bg-red-700 focus:border-red-700 
+            transition-colors duration-200 flex items-center">Reset</a>
+        </div>
+    </form>
+
+    <div class="flex overflow-y-auto scrollbar-none">
+        
+        <section class="flex flex-col py-[3px] h-full min-h-0 w-6/8">
+            {% for post in berita %}
+            <container class="flex justify-center ml-[36px] mt-[-2px]
+            2xl:mr-[105px]
+            xl:mr-[80px]">
+                <news class="flex flex-row items-center w-full xl:gap-5 border-t-2 border-b-2 border-[#cacaca94] 
+                2xl:h-[220px] 2xl:py-[8rem] 2xl:gap-8
+                xl:h-[170px] xl:py-[6.5rem]">
+                    
+                    <isi class="flex w-fit 
+                    2xl:w-[280px] 2xl:h-[180px]
+                    xl:w-[210px] xl:h-[130px]">
+                        <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}">
+                            <img src="{{post.thumbnail.url}}" alt="" class="rounded-[15px] h-full w-full object-cover object-center">
+                        </a>
+                    </isi>
+
+                    <isi class="flex flex-col justify-center 
+                    2xl:px- 2xl:h-full 2xl:w-8/12 2xl:py-[80px]
+                    xl:px-3 xl:h-1/2 xl:w-8/12 xl:py-[50px] ">
+                        <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}">
+                            <h4 class="flex  
+                            2xl:text-[18px] 2xl:font-medium
+                            xl:text-[15px] xl:font-medium">{{post.kategori}} </h4>
+                            <h1 class="flex  
+                            2xl:text-[23px] 2xl:font-semibold 2xl:py-[10px]
+                            xl:text-[18px] xl:font-semibold xl:py-[7px]">{{post.judul}}</h1>
+                            <h4 class="flex  
+                            2xl:text-[18px] 2xl:font-medium
+                            xl:text-[15px] xl:font-medium">{{post.author}}</h4>
+                        </a>
+                    </isi>
+                </news>
+            </container>
+            {% empty %}
+                <p class="p-6 text-gray-500">Belum ada artikel.</p>
+            {% endfor %}
+        </section>
+        
+        <!-- Advertorial Container-->
+        <div class="flex items-start w-2/8 h-full">
+            <!-- h-17/18 ini height awalnya -->
+            <div class="bg-[#F0F0F0] w-full h-fit rounded-[10px] flex flex-col items-center
+            2xl:mr-[36px]
+            xl:ml-[20px]">
+                
+                {% for post in ads %}
+                
+                <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
+                2xl:p-3
+                xl:p-1">
+                    <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}">
+                        <div class="flex justify-between items-center">
+
+                            <div class="flex font-semibold 
+                            2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
+                            xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
+
+                                <h1>{{post.judul}}</h1>
+                            </div>
+                            
+                            
+                            <div class="flex w-fit
+                            2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
+                            xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
+
+                                <img src="{{post.thumbnail.url}}" alt="gambar1" class="rounded-[15px] object-cover object-center w-full h-full">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                {% empty %}
+
+                <p class="p-6 text-gray-500">Belum ada artikel.</p>
+
+                {% endfor %}
+                
+            </div>
+        </div>
+
+    </div>
+
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="flex justify-center mt-6">
+        <ul class="inline-flex -space-x-px text-base h-10">
+
+            {# Previous #}
+            {% if page_obj.has_previous %}
+                <li>
+                    <a href="?{% if base_query %}{{ base_query }}&{% endif %}page={{ page_obj.previous_page_number }}"
+                    class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 ">
+                        Previous
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <span class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-gray-200 border border-e-0 border-gray-300 rounded-s-lg cursor-not-allowed">
+                        Previous
+                    </span>
+                </li>
+            {% endif %}
+
+            {# Number #}
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <li>
+                        <span aria-current="page"
+                            class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">
+                            {{ num }}
+                        </span>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="?{% if base_query %}{{ base_query }}&{% endif %}page={{ num }}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                            {{ num }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {# Next #}
+            {% if page_obj.has_next %}
+                <li>
+                    <a href="?{% if base_query %}{{ base_query }}&{% endif %}page={{ page_obj.next_page_number }}"
+                    class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                        Next
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <span class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-200 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                        Next
+                    </span>
+                </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+    {% endif %}
+
+</main>
+
+{% include footer %}
+{% endblock content %}

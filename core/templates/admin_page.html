@@ -55,51 +55,81 @@
             <th class="px-4 py-3 text-left font-semibold">Isi</th>
             <th class="px-4 py-3 text-left font-semibold">Kategori</th>
             <th class="px-4 py-3 text-left font-semibold">Penulis</th>
-            <th class="px-4 py-3 text-left font-semibold">Pubdate</th>
+            <th class="px-4 py-3 text-left font-semibold">Post date</th>
             <th class="px-4 py-3 text-left font-semibold">Last Update</th>
-            <th class="px-4 py-3 text-left font-semibold">Viewer</th>
-            <th class="px-4 py-3 text-left font-semibold">Status</th>
+            <th class="px-4 py-3 text-left font-semibold">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4.5-7 11-7 11 7 11 7-4.5 7-11 7-11-7-11-7z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+
+            </th>
+            <th class="px-4 py-3 text-left font-semibold">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v10"></path>
+                <path d="M8 7l4-4 4 4"></path>
+                <path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"></path>
+                </svg>
+            </th>
+            <th class="px-4 py-3 text-left font-semibold">Type</th>
             <th class="px-4 py-3 text-right font-semibold">Aksi</th>
             </tr>
         </thead>
 
         <tbody class="divide-y divide-gray-100 bg-white">
             {% for post in artikel %}
-            <tr class="hover:bg-gray-50">
-            <td class="px-4 py-2 text-gray-700 text-center">{{forloop.counter}}</td>
-            <td class="px-4 py-2">
-                <img src="{{ post.thumbnail.url }}" class="w-24 h-16 object-cover rounded" alt="thumbnail">
-            </td>
-            <td class="px-4 py-2 max-w-[220px]">
-                <div class="line-clamp-2 font-semibold">{{post.judul}}</div>
-            </td>
-            <td class="px-4 py-2 max-w-[360px]">
-                <!-- <div class="line-clamp-3 text-gray-600">{{ post.isi|striptags }}</div> -->
-                <div class="line-clamp-3 text-gray-600">{{post.isi|safe}}</div>
-            </td>
-            <td class="px-4 py-2 text-gray-700">{{ post.kategori }}</td>
-            <td class="px-4 py-2 text-gray-700 capitalize">{{ post.author.username }}</td>
-            <td class="px-4 py-2 text-gray-500">{{ post.pubdate|timezone:"Asia/Jakarta"|date:"d/m/Y H:i" }} WIB</td>
-            <td class="px-4 py-2 text-gray-500">{{ post.update|timezone:"Asia/Jakarta"|date:"d/m/Y H:i" }} WIB</td>
-            <td class="px-4 py-2 text-center cursor-default">{{ post.view_count }}</td>
-            <td class="px-4 py-2 text-center text-blue-400 cursor-default">Posted</td>
-            <td class="px-4 py-2 text-right relative">
-                <details class="relative inline-block transition-all" data-menu>
-                    <summary class="cursor-pointer px-2 text-lg list-none focus:text-orange-500">⋮</summary>
-                    <div class="relative w-28 bg-white border rounded shadow text-sm ">
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 text-gray-700 text-center">{{forloop.counter}}</td>
+                    <td class="px-4 py-2">
+                        <img src="{{ post.thumbnail.url }}" class="w-24 h-16 object-cover rounded" alt="thumbnail">
+                    </td>
+                    <td class="px-4 py-2 max-w-[220px]">
+                        <div class="line-clamp-2 font-semibold">{{post.judul}}</div>
+                    </td>
+                    <td class="px-4 py-2 max-w-[360px]">
+                        <!-- <div class="line-clamp-3 text-gray-600">{{ post.isi|striptags }}</div> -->
+                        <div class="line-clamp-3 text-gray-600">{{post.isi|safe}}</div>
+                    </td>
+                    <td class="px-4 py-2 text-gray-700">{{ post.kategori }}</td>
+                    <td class="px-4 py-2 text-gray-700 capitalize">
+                        <a href="">
+                        <img class="w-10 h-10 rounded-full" src="{{data.foto_profil.url}}" alt="Rounded avatar">
+                        </a>
+                    </td>
+                    <td class="px-4 py-2 text-gray-500">{{ post.pubdate|timezone:"Asia/Jakarta"|date:"d/m/Y H:i" }} WIB</td>
+                    <td class="px-4 py-2 text-gray-500">{{ post.update|timezone:"Asia/Jakarta"|date:"d/m/Y H:i" }} WIB</td>
+                    <td class="px-4 py-2 text-center cursor-default">{{ post.view_count }}</td>
+                    <td class="px-4 py-2 text-center cursor-default">{{ post.share_count }}</td>
+                    {% if post.type == 'Normal' %}
+                    <td class="px-4 py-2 text-center text-blue-400 cursor-default">{{post.type}}</td>
+                    {% else %}
+                    <td class="px-4 py-2 text-center text-red-400 cursor-default">{{post.type}}</td>
+                    {% endif %}
+                    <td class="px-4 py-2 text-right relative">
+                    <details class="relative inline-block group" data-menu>
+                        <summary class="cursor-pointer px-2 text-lg list-none focus:text-orange-500">⋮</summary>
+
+                        <!-- MENU: tampil di kiri summary -->
+                        <div
+                        class="absolute z-50 w-32 bg-white border rounded-lg shadow text-sm
+                                top-1/2 -translate-y-1/2
+                                right-[calc(100%+8px)]  <!-- 8px jarak dari titik tiga -->
+                                hidden group-open:block">
                         <a class="block px-4 py-2 hover:bg-gray-50 text-orange-500" href="{% url 'core:edit' post.slug_art %}">Edit</a>
                         <a class="block px-4 py-2 hover:bg-gray-50 text-red-600" href="{% url 'core:hapus' post.slug_art %}">Hapus</a>
-                        <a class="block px-4 py-2 hover:bg-gray-50" href="{% url 'core:halaman-detail-artikel' post.slug_art %}" target="_blank">See Article</a>
-                    </div>
-                </details>
-            </td>
-            </tr>
+                        <a class="block px-4 py-2 hover:bg-gray-50" href="{% url 'core:halaman-detail-artikel' post.slug_art %}">See Article</a>
+                        </div>
+                    </details>
+                    </td>
+                </tr>
             {% empty %}
-            <tr>
-            <td colspan="9" class="px-4 py-6 text-center text-gray-500 italic">
-                Belum ada artikel.
-            </td>
-            </tr>
+                <tr>
+                <td colspan="9" class="px-4 py-6 text-center text-gray-500 italic">
+                    Belum ada artikel.
+                </td>
+                </tr>
             {% endfor %}
         </tbody>
         </table>

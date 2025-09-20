@@ -7,7 +7,8 @@
     {% include navbar %}
 </div>
 
-<div class="font-[poppins]">  <!-- Main-->
+<div class="font-[poppins]">  <!-- Main--> 
+    
     <!-- Ads horizontal banner -->
     <a href="">
         <div class="flex items-center justify-center 
@@ -31,40 +32,40 @@
         2xl:justify-center 2xl:gap-0 2xl:ml-2
         xl:justify-center xl:gap-3 xl:ml-[-10px]">
 
-            <div class="flex flex-row ">  <!--berita headline 1 hroizontal-->
-                <div class="flex items-center group ">   <!-- Image News -->
-                    <a href="" class="">
-                        <div class="flex bg-center bg-[length:100%_100%] transition-[background-size] duration-500 group-hover:bg-[length:110%_110%]
-                        2xl:w-[720px] 2xl:h-[380px] 2xl:ml-[36px] 2xl:rounded-[15px]
-                        xl:w-[488px] xl:h-[275px] xl:ml-[18px] xl:rounded-[13px]"
-                        style="background-image: url('{% static "images/berita.webp" %}');">
+            <!--berita headline 1 hroizontal-->
+            <div class="flex flex-row items-center">  
 
-                            <div class="flex items-end pb-[26px] 
-                            2xl:mx-[18px]  2xl:w-full
-                            xl:pl-[22px]  ">
+                <div class="flex items-center group">
+                    <a href="{% url 'core:halaman-detail-artikel' headline.slug_art %}">
+                        <div
+                        class="relative overflow-hidden
+                                2xl:w-[720px] 2xl:h-[380px] 2xl:ml-[36px] 2xl:rounded-[15px]
+                                xl:w-[488px]  xl:h-[320px]  xl:ml-[25px]  xl:rounded-[13px]
+                                bg-center bg-cover transition-transform duration-500"
+                        style="background-image:url('{{ headline.thumbnail.url }}')">
 
-                                <div class="flex items-center 
-                                2xl:justify-start 2xl:gap-5 2xl:w-full
-                                xl:justify-between xl:gap-3">
+                        <!-- hover zoom versi bg-image -->
+                        <div class="absolute inset-0 transition-transform duration-500 group-hover:scale-120"
+                            style="background-image:url('{{ headline.thumbnail.url }}'); background-size:cover; background-position:center;">
+                        </div>
 
-                                    <div class="border-[#F58220] rounded-full
-                                    2xl:h-[30px] 2xl:border-l-4
-                                    xl:h-[25px] xl:border-l-4 ">
-                                    </div>
+                        <!-- overlay gradasi gelap supaya teks selalu kebaca -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent"></div>
 
-                                    <h1 class="text-white font-semibold  transition-all duration-200
-                                    2xl:text-[18px] 2xl:w-full
-                                    xl:text-[14px]">
-                                        Krisis Energi Global: Negara-Negara Berlomba Mencari Sumber Alternatif Ramah Lingkungan
-                                    </h1>
-
-                                </div>
-
+                        <!-- caption -->
+                        <div class="absolute 2xl:bottom-8 2xl:left-10 2xl:right-10 xl:bottom-5 xl:left-8 xl:right-8">
+                            <div class="flex items-center gap-3 h-fit">
+                            <div class="border-[#F58220] rounded-full 2xl:h-[30px] 2xl:border-l-4 xl:h-[25px] xl:border-l-4 "> </div>
+                            <h1 class="text-white font-semibold
+                                        2xl:text-[20px] xl:text-[16px] leading-snug line-clamp-2 ">
+                                {{ headline.judul }}
+                            </h1>
                             </div>
-
-                        </div>  
+                        </div>
+                        </div>
                     </a>
                 </div>
+
 
                 <div class="flex justify-start"> <!-- Hot News -->
 
@@ -89,25 +90,15 @@
                             
                         </div>
 
-                        <div class="flex flex-col justify-center items-center h-fit w-full 
+                        <div class="flex flex-col justify-center items-start h-fit w-full 
                         2xl:mt-0 2xl:gap-0
                         xl:mt-1 xl:gap-3 ">  <!-- Hot News container-->
+                            {% for post in berita_sort %}
                             <div class="flex flex-row items-center gap-[16px] 2xl:py-3 xl:py-0">   <!-- Hot News value-->
-                                <div class='flex leading-none shrink-0 2xl:w-[40px] xl:w-[30px] 2xl:h-[40px] xl:h-[30px] rounded-full bg-[#E3E3E3] text-[#F58220] items-center justify-center font-semibold 2xl:text-[18px] xl:text-[15px] '>1</div>
-                                <a href="" class="2xl:text-[18px] xl:text-[16px] font-bold ">Gempa Bumi 6,2 SR Guncang Wilayah Timur Indonesia, Warga Dievakuasi</a>
+                                <div class='flex leading-none shrink-0 2xl:w-[40px] xl:w-[30px] 2xl:h-[40px] xl:h-[30px] rounded-full bg-[#E3E3E3] text-[#F58220] items-center justify-center font-semibold 2xl:text-[18px] xl:text-[15px] '>{{forloop.counter}}</div>
+                                <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}" class="2xl:text-[18px] xl:text-[16px] font-bold line-clamp-2">{{post.judul}}</a>
                             </div>
-                            <div class="flex flex-row items-center gap-[16px] 2xl:py-3 xl:py-0">   <!-- Hot News value-->
-                                <div class='flex leading-none shrink-0 2xl:w-[40px] xl:w-[30px] 2xl:h-[40px] xl:h-[30px] rounded-full bg-[#E3E3E3] text-[#F58220] items-center justify-center font-semibold 2xl:text-[18px] xl:text-[15px] '>1</div>
-                                <a href="" class="2xl:text-[18px] xl:text-[16px] font-bold ">Gempa Bumi 6,2 SR Guncang Wilayah Timur Indonesia, Warga Dievakuasi</a>
-                            </div>
-                            <div class="flex flex-row items-center gap-[16px] 2xl:py-3 xl:py-0">   <!-- Hot News value-->
-                                <div class='flex leading-none shrink-0 2xl:w-[40px] xl:w-[30px] 2xl:h-[40px] xl:h-[30px] rounded-full bg-[#E3E3E3] text-[#F58220] items-center justify-center font-semibold 2xl:text-[18px] xl:text-[15px] '>1</div>
-                                <a href="" class="2xl:text-[18px] xl:text-[16px] font-bold ">Gempa Bumi 6,2 SR Guncang Wilayah Timur Indonesia, Warga Dievakuasi</a>
-                            </div>
-                            <div class="flex flex-row items-center gap-[16px] 2xl:py-3 xl:py-0">   <!-- Hot News value-->
-                                <div class='flex leading-none shrink-0 2xl:w-[40px] xl:w-[30px] 2xl:h-[40px] xl:h-[30px] rounded-full bg-[#E3E3E3] text-[#F58220] items-center justify-center font-semibold 2xl:text-[18px] xl:text-[15px] '>1</div>
-                                <a href="" class="2xl:text-[18px] xl:text-[16px] font-bold ">Gempa Bumi 6,2 SR Guncang Wilayah Timur Indonesia, Warga Dievakuasi</a>
-                            </div>
+                            {% endfor %}
                         </div>
 
                     </div>
@@ -121,21 +112,22 @@
             2xl:py-5 2xl:pl-[35px] 2xl:gap-[70px]
             xl:py-2 xl:ml-[15px]">
                 
-                <!--berita 1 hroizontal-->
+                {% for post in headline2 %}
+                <!--berita hroizontal-->
                 <container class="flex flex-row items-center justify-center group
                 2xl:w-[635px] 2xl:h-[180px] 2xl:py-3 2xl:gap-0 2xl:px-1 
-                xl:w-[540px] xl:h-[180px] xl:py-4 xl:px-2">   <!--XL = Mac screen size.  2XL = Monitor Screen Size-->
-
+                xl:w-[540px] xl:h-[180px] xl:py-4 xl:px-4">   <!--XL = Mac screen size.  2XL = Monitor Screen Size-->
+                    
                     <!--Gambar-->
-                    <div class="flex overflow-hidden rounded-[15px] 
+                    <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}" class="flex overflow-hidden rounded-[15px] 
                     2xl:w-[241px] 2xl:h-[160px]
                     xl:w-7/9 xl:h-[130px] xl:items-center xl:justify-center ">
 
-                        <img src="{% static artikel2 %}" alt="gambar2" class="w-full h-full object-cover transition-all duration-700 
+                        <img src="{{post.thumbnail.url}}" alt="gambar2" class="w-full h-full object-cover transition-all duration-700 
                         2xl:group-hover:scale-120
                         xl:group-hover:scale-110">
 
-                    </div>
+                    </a>
                     
                     <!--Text-->
                     <div class="flex flex-col h-full
@@ -146,92 +138,37 @@
                         2xl:h-0 
                         xl:h-full">
 
-                            <h1 href='' class=" 
+                            <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}" class=" 
                             2xl:text-[18px] 2xl:font-semibold 2xl:leading-snug
                             xl:text-[13.4px] xl:font-bold xl:leading-normal ">
-                                Krisis Energi Global: Negara-Negara Berlomba Mencari Sumber Alternatif Ramah Lingkungan
-                            </h1>
+                                {{post.judul}}
+                            </a>
 
                         </div>
 
                         <div class="flex flex-row gap-[36px]">
                             <div class="" id="1"> <!--Kategori-->
-                                <h4 class="font-medium 
+                                <a href="" class="font-medium 
                                 2xl:text-[15px] 
                                 xl:text-[13px]">
-                                    Kategori
-                                </h4>
+                                    {{post.kategori}}
+                                </a>
                             </div>
                             
                             <div class="" id="2"> <!--Tanggal-->
-                                <h4 class="font-medium 
+                                <a href="" class="font-medium 
                                 2xl:text-[15px] 
                                 xl:text-[13px]">
-                                    Tanggal
-                                </h4>
+                                    {{post.author}}
+                                </a>
                             </div>
                         </div>
 
                     </div>
 
                 </container>
+                {% endfor %}
                 
-                <!--berita 2 hroizontal-->
-                <container class="flex flex-row items-center justify-center group
-                2xl:w-[635px] 2xl:h-[180px] 2xl:py-3 2xl:gap-0 2xl:px-1 
-                xl:w-[540px] xl:h-[180px] xl:py-4 xl:px-2">   <!--XL = Mac screen size.  2XL = Monitor Screen Size-->
-
-                    <!--Gambar-->
-                    <div class="flex overflow-hidden rounded-[15px] 
-                    2xl:w-[241px] 2xl:h-[160px]
-                    xl:w-7/9 xl:h-[130px] xl:items-center xl:justify-center ">
-
-                        <img src="{% static artikel2 %}" alt="gambar2" class="w-full h-full object-cover transition-all duration-700 
-                        2xl:group-hover:scale-120
-                        xl:group-hover:scale-110">
-
-                    </div>
-                    
-                    <!--Text-->
-                    <div class="flex flex-col h-full
-                    2xl:w-[370px] 2xl:pl-[15px] 2xl:justify-between 2xl:pr-[10px] 
-                    xl:w-full xl:h-[118px] xl:justify-between xl:ml-3">
-
-                        <div class="flex 
-                        2xl:h-0 
-                        xl:h-full">
-
-                            <h1 href='' class=" 
-                            2xl:text-[18px] 2xl:font-semibold 2xl:leading-snug
-                            xl:text-[13.4px] xl:font-bold xl:leading-normal ">
-                                Krisis Energi Global: Negara-Negara Berlomba Mencari Sumber Alternatif Ramah Lingkungan
-                            </h1>
-
-                        </div>
-
-                        <div class="flex flex-row gap-[36px]">
-                            <div class="" id="1"> <!--Kategori-->
-                                <h4 class="font-medium 
-                                2xl:text-[15px] 
-                                xl:text-[13px]">
-                                    Kategori
-                                </h4>
-                            </div>
-                            
-                            <div class="" id="2"> <!--Tanggal-->
-                                <h4 class="font-medium 
-                                2xl:text-[15px] 
-                                xl:text-[13px]">
-                                    Tanggal
-                                </h4>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </container>
-                
-
             </div>
 
         </div>
@@ -244,135 +181,38 @@
             2xl:mr-[36px]
             xl:ml-[20px]">
 
+                {% for post in ads %}
                 
                 <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
                 2xl:p-3
                 xl:p-1">
-                    <a href="">
+                    <a href="{% url 'core:halaman-detail-artikel' post.slug_art %}">
                         <div class="flex justify-between items-center">
 
                             <div class="flex font-semibold 
                             2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
                             xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
 
-                                <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
+                                <h1>{{post.judul}}</h1>
                             </div>
                             
                             
-                            <div class="flex 
+                            <div class="flex w-fit
                             2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
                             xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
 
-                                <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
+                                <img src="{{post.thumbnail.url}}" alt="gambar1" class="rounded-[15px] object-cover object-center w-full h-full">
                             </div>
-
                         </div>
                     </a>
                 </div>
-                
-                
-                <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-                2xl:p-3
-                xl:p-1">
-                    <a href="">
-                        <div class="flex justify-between items-center">
 
-                            <div class="flex font-semibold 
-                            2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                            xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
+                {% empty %}
 
-                                <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                            </div>
-                            
-                            
-                            <div class="flex 
-                            2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                            xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
+                <p class="p-6 text-gray-500">Belum ada artikel.</p>
 
-                                <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                            </div>
+                {% endfor %}
 
-                        </div>
-                    </a>
-                </div>
-                
-                
-                <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-                2xl:p-3
-                xl:p-1">
-                    <a href="">
-                        <div class="flex justify-between items-center">
-
-                            <div class="flex font-semibold 
-                            2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                            xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                                <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                            </div>
-                            
-                            
-                            <div class="flex 
-                            2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                            xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                                <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-                
-                
-                <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-                2xl:p-3
-                xl:p-1">
-                    <a href="">
-                        <div class="flex justify-between items-center">
-
-                            <div class="flex font-semibold 
-                            2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                            xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                                <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                            </div>
-                            
-                            
-                            <div class="flex 
-                            2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                            xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                                <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
-                
-                
-                <div class="flex justify-center items-center  w-fit h-fit mb-[14px] rounded-[10px] my-1 mx-[15px] hover:bg-[#00000012] transition-all duration-200 
-                2xl:p-3
-                xl:p-1">
-                    <a href="">
-                        <div class="flex justify-between items-center">
-
-                            <div class="flex font-semibold 
-                            2xl:text-[18px] 2xl:w-3/5 2xl:h-[86px] 2xl:pl-3  2xl:mr-1 2xl:items-center
-                            xl:text-[12px] xl:leading-tight xl:w-1/2 xl:pl-1 ">
-
-                                <h1>Promo Spesial! Beli 1 Kopi Gratis 1 di Gerai Tertentu</h1>
-                            </div>
-                            
-                            
-                            <div class="flex 
-                            2xl:h-2/10 2xl:items-center 2xl:w-2/5 2xl:ml-0
-                            xl:w-1/2 xl:h-[86px] xl:items-center xl:ml-3">
-
-                                <img src="{% static artikel2 %}" alt="gambar1" class="rounded-[15px] object-center object-cover">
-                            </div>
-
-                        </div>
-                    </a>
-                </div>
                 
             </div>
         </div>
@@ -401,7 +241,8 @@
             <div class="flex-1 overflow-y-auto scrollbar-none">   <!-- Daftar Artikel -->
 
                 <!-- Artikel 1 -->
-                {% for post in news %}
+                {% for post in berita %}
+
                 <div class="flex justify-center ml-[36px] mt-[-2px]
                 2xl:mr-[105px]
                 xl:mr-[80px]">
@@ -434,58 +275,9 @@
                     </div>
                 </div>
                 {% endfor %}
-
-                <!-- <div class="flex justify-center ml-[36px] mr-[165px] mt-[-3px]">   
-                    <div class="flex flex-row items-center w-full h-[220px] gap-5 border-t-2 border-b-2 border-[#F0F0F0] py-[25px]">
-                        <div class="flex w-fit h-[145px] ">
-                            <img src="{% static artikel2 %}" alt="" class=" rounded-[15px]">
-                        </div>
-                        <div class="flex flex-col justify-center px-3  h-full w-9/12">
-                            <h4 class="flex font-normal text-[18px]">Kategori</h4>
-                            <h1 class="flex font-medium text-[22px] py-[8px]">Mengenal Lebih Dekat Teknologi 5G: Manfaat, Tantangan, dan Dampaknya bagi Kehidupan Sehari-hari.</h1>
-                            <h4 class="flex font-normal text-[18px]">Tanggal upload</h4>
-                        </div>
-                    </div>
+                <div class="flex justify-center my-5">
+                    <a href="{% url 'core:halaman-daftar-artikel' %}" class="text-white bg-[#0056A0] hover:bg-[#004480] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2">Lihat Semua</a>
                 </div>
-                
-                <div class="flex justify-center ml-[36px] mr-[165px] mt-[-3px]">   
-                    <div class="flex flex-row items-center w-full h-[220px] gap-5 border-t-2 border-b-2 border-[#F0F0F0] py-[25px]">
-                        <div class="flex w-fit h-[145px] ">
-                            <img src="{% static artikel1 %}" alt="" class=" rounded-[15px]">
-                        </div>
-                        <div class="flex flex-col justify-center px-3  h-full w-9/12">
-                            <h4 class="flex font-normal text-[18px]">Kategori</h4>
-                            <h1 class="flex font-medium text-[22px] py-[8px]">Mengenal Lebih Dekat Teknologi 5G: Manfaat, Tantangan, dan Dampaknya bagi Kehidupan Sehari-hari.</h1>
-                            <h4 class="flex font-normal text-[18px]">Tanggal upload</h4>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center ml-[36px] mr-[165px] mt-[-3px]">   
-                    <div class="flex flex-row items-center w-full h-[220px] gap-5 border-t-2 border-b-2 border-[#F0F0F0] py-[25px]">
-                        <div class="flex w-fit h-[145px] ">
-                            <img src="{% static artikel2 %}" alt="" class=" rounded-[15px]">
-                        </div>
-                        <div class="flex flex-col justify-center px-3  h-full w-9/12">
-                            <h4 class="flex font-normal text-[18px]">Kategori</h4>
-                            <h1 class="flex font-medium text-[22px] py-[8px]">Mengenal Lebih Dekat Teknologi 5G: Manfaat, Tantangan, dan Dampaknya bagi Kehidupan Sehari-hari.</h1>
-                            <h4 class="flex font-normal text-[18px]">Tanggal upload</h4>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center ml-[36px] mr-[165px] mt-[-3px]">   
-                    <div class="flex flex-row items-center w-full h-[220px] gap-5 border-t-2 border-b-2 border-[#F0F0F0] py-[25px]">
-                        <div class="flex w-fit h-[145px] ">
-                            <img src="{% static artikel1 %}" alt="" class=" rounded-[15px]">
-                        </div>
-                        <div class="flex flex-col justify-center px-3  h-full w-9/12">
-                            <h4 class="flex font-normal text-[18px]">Kategori</h4>
-                            <h1 class="flex font-medium text-[22px] py-[8px]">Mengenal Lebih Dekat Teknologi 5G: Manfaat, Tantangan, dan Dampaknya bagi Kehidupan Sehari-hari.</h1>
-                            <h4 class="flex font-normal text-[18px]">Tanggal upload</h4>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
         </div>
@@ -511,38 +303,14 @@
                         <div class="flex flex-col items-left
                         xl:gap-[16px]
                         2xl:gap-4">
-
+                            {% for tag in tags %}
                             <div class="flex flex-row xl:gap-4 items-center">
                                 <div class="bg-[#F0F0F0] rounded-full font-semibold items-center justify-center flex
                                 xl:w-[28px] xl:h-[28px] xl:text-[16px]
-                                2xl:w-[40px] 2xl:h-[40px] 2xl:text-[20px]">🔥</div>
-                                <a href="" class="xl:text-[16px] 2xl:text-[20px] test font-normal text-white">#Pemerintah</a>
+                                2xl:w-[40px] 2xl:h-[40px] 2xl:text-[20px]">{{forloop.counter}}</div>
+                                <a href="{% url 'core:halaman-daftar-artikel' %}?cari={{ tag.name }}" class="xl:text-[16px] 2xl:text-[20px] font-medium text-white capitalize">#{{tag.name}}</a>
                             </div>
-                            <div class="flex flex-row gap-4 items-center">
-                                <div class="bg-[#F0F0F0] rounded-full font-semibold items-center justify-center flex
-                                xl:w-[28px] xl:h-[28px] xl:text-[16px]
-                                2xl:w-[40px] 2xl:h-[40px] 2xl:text-[20px]">2</div>
-                                <a href="" class="xl:text-[16px] 2xl:text-[20px] test font-normal text-white">#Kesehatan</a>
-                            </div>
-                            <div class="flex flex-row gap-4 items-center">
-                                <div class="bg-[#F0F0F0] rounded-full font-semibold items-center justify-center flex
-                                xl:w-[28px] xl:h-[28px] xl:text-[16px]
-                                2xl:w-[40px] 2xl:h-[40px] 2xl:text-[20px]">3</div>
-                                <a href="" class="xl:text-[16px] 2xl:text-[20px] test font-normal text-white">#Kesehatan</a>
-                            </div>
-                            <div class="flex flex-row gap-4 items-center">
-                                <div class="bg-[#F0F0F0] rounded-full font-semibold items-center justify-center flex
-                                xl:w-[28px] xl:h-[28px] xl:text-[16px]
-                                2xl:w-[40px] 2xl:h-[40px] 2xl:text-[20px]">4</div>
-                                <a href="" class="xl:text-[16px] 2xl:text-[20px] test font-normal text-white">#Kesehatan</a>
-                            </div>
-                            <div class="flex flex-row gap-4 items-center">
-                                <div class="bg-[#F0F0F0] rounded-full font-semibold items-center justify-center flex
-                                xl:w-[28px] xl:h-[28px] xl:text-[16px]
-                                2xl:w-[40px] 2xl:h-[40px] 2xl:text-[20px]">5</div>
-                                <a href="" class="xl:text-[16px] 2xl:text-[20px] test font-normal text-white">#Kesehatan</a>
-                            </div>
-                            
+                            {% endfor %}
                         </div>
 
                     </div>

@@ -5,26 +5,6 @@ from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
-# ---> Testing Image Cloud Upload get and push <----
-class ImageManager(models.Model):
-    title = models.CharField(max_length=150)
-    desc = models.CharField(max_length=255)
-    image = CloudinaryField('image')
-
-    def __str__(self):
-        return self.title
-
-
-
-
-
-
-
-
-
-
-
-
 
 class Profile(models.Model):
     GENDER_CHOICES = [('-', '-'), ('M','Pria'), ('F','Wanita')]

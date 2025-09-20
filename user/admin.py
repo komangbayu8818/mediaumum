@@ -6,7 +6,7 @@ from unfold.admin import ModelAdmin
 # Register your models here.
 
 # Ganti nama 'list' menjadi 'model_list' agar tidak bentrok dengan fungsi Python
-model_list = [Profile, ImageManager]
+model_list = [Profile]
 
 for model in model_list:
     # Membuat class Admin secara dinamis yang mewarisi dari Unfold ModelAdmin

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="max-w-xl mx-auto p-6 ">
+    <h1 class="text-2xl font-bold mb-4">Pembayaran Iklan</h1>
+    <h1 class="text-md font-bold mb-4">Total: <span class="text-black font-medium font-[poppins]">Rp. {{harga}}</span></h1>
+
+    <div class="bg-white border rounded p-4 mb-4">
+        <p class="mb-2"><strong>Judul:</strong> {{ artikel.judul }}</p>
+        <p class="mb-2"><strong>Status saat ini:</strong> <span class="text-red-400">{{ artikel.status }}</span> </p>
+        <p class="text-gray-600 text-sm">Ini halaman pembayaran palsu (fake). Klik tombol di bawah untuk menyelesaikan pembayaran dan mempublikasikan iklan.</p>
+        
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        Bayar &amp; Publikasikan
+        </button>
+    </form>
+
+    <p class="mt-4 text-sm text-gray-500">
+        *Simulasi: Tidak ada gateway beneran. Tombol di atas hanya mengubah status <code>pending → posted</code>.
+    </p>
+</main>
+{% endblock %}

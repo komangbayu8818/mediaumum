@@ -89,32 +89,67 @@
 
             <!-- BURGER -->
             <div class="" data-dropdown>
-                {% if request.user.is_authenticated %}
-                    {% if perms.blog.add_artikel %}
+                    
                     <ul class="flex flex-column 2xl:text-[1rem] xl:text-[0.9rem] font-bold gap-[3rem] text-gray-700 text-right">
                         <li class="relative">
-                        <!-- Button -->
-                        <button data-toggle
-                            class="flex items-center border border-gray-300 bg-white text-gray-700 px-2 py-2 rounded hover:bg-gray-200 transition-all duration-200">
-                            <img src="{% static burger %}" alt="hamburger-icon" class="transition-transform duration-200 w-5">
-                        </button>
+                            <!-- Button -->
+                            <button data-toggle
+                                class="flex items-center border border-gray-300 bg-white text-gray-700 px-2 py-2 rounded hover:bg-gray-200 transition-all duration-200">
+                                <img src="{% static burger %}" alt="hamburger-icon" class="transition-transform duration-200 w-5">
+                            </button>
 
-                        <!-- Menu -->
-                        <div data-menu
-                            class="absolute right-0 mt-2 bg-white border border-gray-200 rounded shadow-md
-                                opacity-0 scale-y-0 origin-top transition-all duration-200 pointer-events-none
-                                2xl:w-50 xl:w-40">
-                            <a href="{% url 'core:home' %}" class="block px-4 py-2 hover:bg-gray-100">Home</a>
-                            <a href="{% url 'user:login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a>
-                            <a href="{% url 'core:tambah-artikel' %}" class="block px-4 py-2 hover:bg-gray-100">Tambah Artikel</a>
-                            <a href="{% url 'core:halaman-detail-artikel' 'sore-istri-dari-masa-depan-jadi-film-terlaris-di-indonesia' %}"
-                            class="block px-4 py-2 hover:bg-gray-100">Detail Artikel</a>
-                        </div>
+                            
+                            <!-- Menu Debug -->
+                            <div data-menu
+                            class="absolute right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-md
+                                    opacity-0 scale-y-0 origin-top transition-all duration-200 pointer-events-none
+                                    w-fit text-md px-5 py-4 font-medium">
+
+                                <div class="mb-4">
+                                    <form action="{% url 'core:home' %}" method="get" class="flex gap-2">
+                                    <input name="q" class="flex-1 border rounded-lg px-3 py-2" placeholder="Cari berita…">
+                                    <button class="px-4 py-2 rounded-lg border">Cari</button>
+                                    </form>
+                                </div>
+
+                                <ul class="space-y-2 text-lg font-medium">
+                                    <li class="rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:home' %}" class="block px-2 py-2">🏠 Beranda</a></li>
+                                    <li class="rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?sort=latest" class="block px-2 py-2">⚡ Terbaru</a></li>
+                                    <li class="rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?sort=most_popular" class="block px-2 py-2">🔥 Trending</a></li>
+
+                                    <li>
+                                    <details class="px-4 py-4">
+                                        <summary class="cursor-pointer">🗂️ Kategori</summary>
+                                        <ul class="mt-4 mr-4 space-y-4 gap-x-2 grid grid-cols-2 text-sm border-r-2 border-gray-300 pr-7">
+                                            <li class="flex justify-center w-fit h-fit px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Wisata">Wisata</a></li>
+                                            <li class="flex justify-center w-fit h-fit px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Hobi">Hobi</a></li>
+                                            <li class="flex justify-center w-fit h-fit px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Teknologi">Teknologi</a></li>
+                                            <li class="flex justify-center w-fit h-fit px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Kesehatan">Kesehatan</a></li>
+                                            <li class="flex justify-center w-fit h-fit px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Olahraga">Olahraga</a></li>
+                                            <li class="flex justify-center w-fit h-fit px-3 py-2 rounded-md hover:bg-gray-100 hover:text-[#F58220] transition-all duration-200"><a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Pendidikan">Pendidikan</a></li>
+                                        </ul>
+                                    </details>
+                                    </li>
+
+                                    {% if user.is_authenticated %}
+                                    {% if perms.blog.add_artikel %}
+                                        <li class="mt-4 text-gray-500 uppercase text-sm">Kontributor</li>
+                                        <li><a href="{% url 'core:tambah-artikel' %}" class="block px-2 py-2">✍️ Tulis Artikel</a></li>
+                                        <li><a href="{% url 'core:halaman-admin' %}" class="block px-2 py-2">📊 Dashboard</a></li>
+                                    {% endif %}
+                                    {% endif %}
+
+                                    <li class="mt-6 text-gray-500 uppercase text-sm">Info</li>
+                                    <li><a href="{% url 'core:home' %}" class="block px-2 py-2">Tentang Kami</a></li>
+                                    <li><a href="{% url 'core:home' %}" class="block px-2 py-2">Hubungi Kami</a></li>
+                                    <li><a href="{% url 'core:halaman-pilihan-iklan' %}" class="block px-2 py-2">Pasang Iklan</a></li>
+                                    <li><a href="{% url 'core:home' %}" class="block px-2 py-2">Kebijakan Privasi</a></li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
-                    {% else %}
-                    {% endif %}
-                {% endif %}
+                    
+                
             </div>
         </div>
     </div>
@@ -129,22 +164,22 @@
             2xl:text-[18px] 2xl:gap-[56px]
             xl:text-[14px] xl:gap-[46px]">
                 <li class="hover:text-[#F58220] transition-colors duration-300">
-                    <a href="">Wisata</a>
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Wisata">Wisata</a>
                 </li>
                 <li class="hover:text-[#F58220] transition-colors duration-300">
-                    <a href="">Hobi</a>
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Hobi">Hobi</a>
                 </li>
                 <li class="hover:text-[#F58220] transition-colors duration-300">
-                    <a href="">Teknologi</a>
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Teknologi">Teknologi</a>
                 </li>
                 <li class="hover:text-[#F58220] transition-colors duration-300">
-                    <a href="">Kesehatan</a>
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Kesehatan">Kesehatan</a>
                 </li>
                 <li class="hover:text-[#F58220] transition-colors duration-300">
-                    <a href="">Olahraga</a>
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Olahraga">Olahraga</a>
                 </li>
                 <li class="hover:text-[#F58220] transition-colors duration-300">
-                    <a href="">Pendidikan</a>
+                    <a href="{% url 'core:halaman-daftar-artikel' %}?kategori=Pendidikan">Pendidikan</a>
                 </li>
 
             </ul>

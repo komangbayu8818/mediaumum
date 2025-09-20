@@ -1,39 +1,149 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
+{% load static %}
 {% block content %}
-<div class="flex justify-center py-10 bg-[#0056A0]">
-    <form method="POST" enctype='multipart/form-data' class="w-full max-w-lg bg-white shadow-xl rounded-xl p-8">
-        {% csrf_token %}
-        {{ form.media }}
 
-        <h2 class="text-2xl font-bold text-orange-500 mb-6 text-center">Edit Artikel</h2>
-        
-        <div class="space-y-5">
-            {% for field in form %}
-                <div>
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
-                        {{ field.label }}
-                    </label>
-                    <div class="relative">
-                        {{ field|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" }}
-                        {% if field.errors %}
-                            <p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>
-                        {% endif %}
+{% include simple_navbar %}
+
+<main class="flex max-w-full min-h-full items-stretch bg-[#0056A0]">
+    <left class="xl:w-5/11 2xl:w-4/7 2xl:max-h-fit xl:max-h-fit font-[poppins]">
+        <div class="flex flex-col items-center py-10">
+            <a href="{% url 'core:halaman-admin' %}" class="text-white font-semibold 2xl:mb-10 2xl:mt-0 xl:mb-5 xl:mt-[-18px] 2xl:text-xl w-full ml-10">← Back</a>
+
+            <form method="POST" enctype="multipart/form-data" class="w-full 2xl:max-w-14/15 xl:max-w-14/15 bg-white shadow-2xl shadow-[#00000068] rounded-xl p-8">
+                {% csrf_token %}
+                {{ form.media }}
+
+                <h1 class="mb-4 xl:text-4xl 2xl:text-4xl font-bold leading-none tracking-tight text-[#FF9119] text-center">{{judul}}</h1>
+
+                <div class="space-y-5">
+                {% for field in form %}
+                    {% if field.name == 'isi' %}
+                    <div class="flex flex-col 2xl:items-center">
+                        <label for="{{ field.id_for_label }}" class="2xl:ml-[12rem] 2xl:text-xl block text-sm font-semibold text-gray-700 mb-2 w-full">{{ field.label }}</label>
+                        <div class="relative">
+                        {{ field }}
+                        {% if field.errors %}<p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>{% endif %}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
 
-        <div class="mt-8 flex justify-end gap-10">
-            <a href="{% url 'core:halaman-admin' %}"
-                class="bg-red-500 hover:bg-red-800 text-white font-bold px-6 py-2 rounded-lg shadow-md transition duration-200">
-                Cancel
-            </a>
-            <button type="submit" 
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-lg shadow-md transition duration-200">
-                Konfirmasi
-            </button>
+                    {% elif field.name == 'tags' %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="block text-sm 2xl:text-xl font-semibold text-gray-700 mb-2">{{ field.label }}</label>
+                        {{ field|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" }}
+                        {% if field.errors %}<p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>{% endif %}
+                        <p class="text-xs text-gray-500 mt-1">Tekan <b>spasi</b> atau <b>enter</b> untuk menambahkan tag.</p>
+                    </div>
+
+                    {% else %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="block text-sm 2xl:text-xl font-semibold text-gray-700 mb-2">{{ field.label }}</label>
+                        <div class="relative">
+                        {% if field.errors %}<p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>{% endif %}
+                        {{ field|add_class:"2xl:w-full xl:w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 auto-resize" }}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white 2xl:text-xl font-bold px-6 py-2 rounded-lg shadow-md transition duration-200">Kirim</button>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
+    </left>
+
+    <right class="xl:w-6/11 2xl:w-3/7 2xl:max-h-screen xl:max-h-[63rem] flex flex-col gap-6 overflow-hidden 2xl:pt-10 xl:pt-5">
+        <div class="flex justify-center 2xl:text-2xl xl:text-lg font-semibold 2xl:mb-4 text-[#FF9119]">Preview</div>
+        <div id="previewBox" class="w-full flex-1 bg-white p-6 rounded-lg prose prose-img:max-w-full overflow-y-auto overflow-x-hidden">
+            <div class="w-full h-fit flex bg-white py-[25px] gap-4 items-stretch">
+                <div class="border-3 border-[#F58220] rounded-full"></div>
+                <div id="previewTitle" class="h-full text-[24px] font-bold"></div>
+            </div>
+
+            <h1 class="text-3xl font-bold mb-4"></h1>
+            <img id="previewThumbnail" class="w-full h-auto mb-4 rounded-lg hidden" alt="Thumbnail Preview">
+            <div id="previewContent" class="t-6 max-h-screen overflow-y-auto prose max-w-none break-words [overflow-wrap:anywhere]"></div>
+        </div>
+    </right>
+</main>
+
+
+<!-- Tagify JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // ====== Preview Title / Thumbnail / CKEditor ======
+        const titleInput = document.getElementById("id_judul");
+        const thumbInput = document.getElementById("id_thumbnail");
+        const previewTitle = document.getElementById("previewTitle");
+        const previewThumb = document.getElementById("previewThumbnail");
+        const previewContent = document.getElementById("previewContent");
+
+        if (titleInput) {
+            titleInput.addEventListener("input", function () {
+            previewTitle.textContent = this.value || "Judul artikel...";
+            });
+        }
+
+        if (thumbInput) {
+            thumbInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                previewThumb.src = e.target.result;
+                previewThumb.classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewThumb.src = "";
+                previewThumb.classList.add("hidden");
+            }
+            });
+        }
+
+        function updateContent(html) { previewContent.innerHTML = html || ""; }
+
+        if (window.CKEDITOR) {
+            CKEDITOR.on("instanceReady", function (evt) {
+            const ed = evt.editor;
+            if (ed.name === "isi" || (ed.element && ed.element.getId() === "id_isi")) {
+                updateContent(ed.getData());
+                ed.on("change", () => updateContent(ed.getData()));
+                ed.on("key", () => updateContent(ed.getData()));
+                ed.on("dataReady", () => updateContent(ed.getData()));
+            }
+            });
+        } else {
+            const isiInput = document.getElementById("id_isi");
+            if (isiInput) isiInput.addEventListener("input", function () { updateContent(this.value); });
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tagsInput =
+            document.getElementById("tags-input") ||
+            document.getElementById("id_tags") ||
+            document.querySelector("input[name='tags']");
+
+        if (tagsInput && window.Tagify) {
+            const tagify = new Tagify(tagsInput, {
+            delimiters: ",| ",
+            originalInputValueFormat: valuesArr =>
+                valuesArr.map(v => v.value.trim()).filter(Boolean).join(", "),
+            dropdown: { enabled: 0 }
+            });
+
+            const initialVal = (tagsInput.value || "").trim();
+            if (initialVal) {
+            tagify.removeAllTags();
+            tagify.addTags(initialVal.split(",").map(v => v.trim()).filter(Boolean));
+            }
+        }
+    });
+</script>
+
 {% endblock content %}

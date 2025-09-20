@@ -17,6 +17,12 @@ cloudinary.config(
     api_secret = "Gcp_lV-TLfwVX16vohjuatuexpw",
 )
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'width': '100%',
+        'height': 250,
+    }
+}
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,6 +52,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'cloudinary',
     'ckeditor',
+    'taggit',
 ]
 
 TINYMCE_DEFAULT_CONFIG = {

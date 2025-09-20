@@ -8,7 +8,7 @@
 <main class="flex max-w-full min-h-full items-stretch bg-[#0056A0]">
     <left class="xl:w-5/11 2xl:w-4/7 2xl:max-h-fit xl:max-h-fit font-[poppins]">
         <div class="flex flex-col items-center py-10">
-            <a href="{% url 'core:halaman-admin' %}" class="text-white font-semibold 2xl:mb-10 2xl:mt-0 xl:mb-5 xl:mt-[-18px] 2xl:text-xl w-full ml-10">← Back</a>
+            <a href="{% url 'core:home' %}" class="text-white font-semibold 2xl:mb-10 2xl:mt-0 xl:mb-5 xl:mt-[-18px] 2xl:text-xl w-full ml-10">← Back</a>
 
             <form method="POST" enctype="multipart/form-data" class="w-full 2xl:max-w-14/15 xl:max-w-14/15 bg-white shadow-2xl shadow-[#00000068] rounded-xl p-8">
                 {% csrf_token %}
@@ -33,6 +33,14 @@
                         {{ field|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" }}
                         {% if field.errors %}<p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>{% endif %}
                         <p class="text-xs text-gray-500 mt-1">Tekan <b>spasi</b> atau <b>enter</b> untuk menambahkan tag.</p>
+                    </div>
+
+                    {% elif field.name == 'duration' %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="block text-sm 2xl:text-xl font-semibold text-gray-700 mb-2">{{ field.label }}</label>
+                        {{ field|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200" }}
+                        {% if field.errors %}<p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>{% endif %}
+                        <p class="text-xs text-gray-500 mt-1">Masukkan durasi dalam satuan <b>Hari</b>. Harga : <b>13K/hari</b></p>
                     </div>
 
                     {% elif field.name == 'type' %}
