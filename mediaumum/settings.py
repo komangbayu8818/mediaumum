@@ -12,9 +12,9 @@ from cloudinary import CloudinaryImage
 from cloudinary import CloudinaryVideo
 
 cloudinary.config(
-    cloud_name = "db7fwlx3c",
-    api_key= "395347565293975",
-    api_secret = "Gcp_lV-TLfwVX16vohjuatuexpw",
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME", ""),
+    api_key=os.getenv("CLOUDINARY_API_KEY", ""),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
 )
 
 CKEDITOR_CONFIGS = {
@@ -28,14 +28,9 @@ CKEDITOR_CONFIGS = {
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+0+k_n%liu*7x13f5uo3ht_38@7-pr^i-n$451m)bpfl&((di)'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-only")          # di server isi beneran
+DEBUG = os.getenv("DEBUG", "False") == "True"             # "True" / "False"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # Application definition
 
@@ -78,7 +73,7 @@ ROOT_URLCONF = 'mediaumum.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,12 +92,14 @@ WSGI_APPLICATION = 'mediaumum.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_mediaumum',
-        'USER' : 'manggun',
-        'PASSWORD' : 'test1213',
-        'HOST' : 'localhost'
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("DB_NAME", "db_mediaumum"),
+        "USER": os.getenv("DB_USER", "manggun"),
+        "PASSWORD": os.getenv("DB_PASS", ""),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "3306"),
+        "OPTIONS": {"charset": "utf8mb4"},
     }
 }
 
@@ -142,12 +139,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATIC_ROOT = BASE_DIR / "staticfiles"   # tempat hasil collectstatic
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
